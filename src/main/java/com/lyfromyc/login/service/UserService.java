@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Objects;
 
 @Service
 public class UserService {
@@ -56,8 +57,8 @@ public class UserService {
         return userMapper.findOne(param);
     }
 
+    //验证密码
     public boolean comparePassword(User user, User userInDataBase) {
-        return passwordToHash(user.getPassword())      // 将用户提交的密码转换为 hash
-                .equals(userInDataBase.getPassword()); // 数据库中的 password 已经是 hash，不用转换
+        return Objects.equals(passwordToHash(user.getPassword()), userInDataBase.getPassword()); // 数据库中的 password 已经是 hash，不用转换
     }
 }

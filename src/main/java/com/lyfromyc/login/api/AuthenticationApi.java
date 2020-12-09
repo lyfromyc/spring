@@ -24,7 +24,7 @@ public class AuthenticationApi {
     }
 
     @PostMapping("")
-    public Object login(@RequestBody User user) throws JSONException {
+    public Object login(@RequestBody User user) {
         User userInDataBase = userService.findByName(user.getName());
         JSONObject jsonObject = new JSONObject();
         if (userInDataBase == null) {
@@ -35,6 +35,7 @@ public class AuthenticationApi {
             String token = authenticationService.getToken(userInDataBase);
             jsonObject.put("token", token);
             jsonObject.put("user", userInDataBase);
+            jsonObject.put("message", "登陆成功");
         }
         return jsonObject;
     }
